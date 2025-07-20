@@ -1,4 +1,4 @@
-<!-- relationship_app/list_books.html -->
+<!-- list_books.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,8 @@
     <ul>
         {% for book in books %}
             <li>{{ book.title }} by {{ book.author.name }}</li>
+        {% empty %}
+            <li>No books found.</li>
         {% endfor %}
     </ul>
 </body>
