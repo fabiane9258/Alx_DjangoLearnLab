@@ -1,12 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Book, Library
+from django.views.generic.detail import DetailView
+from .models import Library
 
-# View to list all books
-def list_books(request):
-    books = Book.objects.all()
-    return render(request, 'relationship_app/list_books.html', {'books': books})
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'
 
-# View to display details of a specific library
-def library_detail(request, library_id):
-    library = get_object_or_404(Library, id=library_id)
-    return render(request, 'relationship_app/library_detail.html', {'library': library})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add all books in this library to context
+        context['books'] = self.object.books.all()
+        return context
