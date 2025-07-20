@@ -18,11 +18,15 @@ author_name = "Chinua Achebe"
 try:
     author = Author.objects.get(name=author_name)
     books_by_author = author.books.all()
+    
+    books_by_author_explicit = Book.objects.filter(author=author)
+    
     print(f"\nBooks by {author_name}:")
     for book in books_by_author:
         print(f"- {book.title}")
 except Author.DoesNotExist:
     print(f"No author found with name {author_name}")
+
 
 # Query 2: List all books in a library
 library_name = "City Library"
