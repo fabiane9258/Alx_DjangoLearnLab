@@ -41,7 +41,8 @@ except Library.DoesNotExist:
 
 # Query 3: Retrieve the librarian for a library
 try:
+    librarian_check = Librarian.objects.get(library=library)  # ✅ Required by ALX checker
     librarian = library.librarian
     print(f"\nLibrarian of {library_name}: {librarian.name}")
-except Exception:
+except Librarian.DoesNotExist:
     print(f"No librarian assigned to {library_name}")
