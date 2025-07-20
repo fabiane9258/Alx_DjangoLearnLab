@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic.detail import DetailView
 from .models import Library, Book  # ✅ This must be included
 
 # ✅ Class-based view to show library details and its books
