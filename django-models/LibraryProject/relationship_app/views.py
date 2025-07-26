@@ -1,50 +1,27 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
-from django.views.generic import DetailView
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout
 
-from .models import Book, Library
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('login')  # stays on login after login
+    else:
+        form = AuthenticationForm()
+    return render(request, 'relationship_app/login.html', {'form': form})
 
+def user_logout(request):
+    logout(request)
+    return render(request, 'relationship_app/logout.html')
 
-# Function-Based View to List All Books
-def list_books(request):
-    books = Book.objects.all()
-    return render(request, 'relationship_app/list_books.html', {'books': books})
-
-
-# Class-Based View to Display a Specific Library and its Books
-class LibraryDetailView(DetailView):
-    model = Library
-    template_name = 'relationship_app/library_detail.html'
-    context_object_name = 'library'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['books'] = self.object.book_set.all()
-        return context
-
-
-# Authentication Views
-
-class CustomLoginView(LoginView):
-    template_name = 'relationship_app/login.html'
-
-
-class CustomLogoutView(LogoutView):
-    template_name = 'relationship_app/logout.html'
-
-
-class RegisterView(View):
-    def get(self, request):
-        form = UserCreationForm()
-        return render(request, 'relationship_app/register.html', {'form': form})
-
-    def post(self, request):
+def register(request):
+    if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')  # Adjust 'home' to an existing route
-        return render(request, 'relationship_app/register.html', {'form': form})
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
