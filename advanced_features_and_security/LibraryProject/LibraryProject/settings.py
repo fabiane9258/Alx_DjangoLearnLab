@@ -55,12 +55,27 @@ CSP_OBJECT_SRC = ("'none'",)
 # ==============================================
 #         OTHER SECURITY HEADERS
 # ==============================================
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
+# Prevent Clickjacking
+X_FRAME_OPTIONS = "DENY"
+
+# Prevent MIME-sniffing
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+# Enable browser-based XSS filtering
+SECURE_BROWSER_XSS_FILTER = True
+
+# Secure Cookies - Only transmitted via HTTPS
+SESSION_COOKIE_SECURE = True     # Protect session cookie
+CSRF_COOKIE_SECURE = True        # Protect CSRF cookie
+
+# Enforce HTTPS connections
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP requests to HTTPS
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # Instructs browser to use HTTPS for 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow site to be preloaded in browsers supporting HSTS preload
+
 
 # ==============================================
 #               ROOT URL
