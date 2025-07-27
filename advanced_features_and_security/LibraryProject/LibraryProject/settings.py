@@ -76,6 +76,8 @@ SECURE_HSTS_SECONDS = 31536000  # Instructs browser to use HTTPS for 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
 SECURE_HSTS_PRELOAD = True  # Allow site to be preloaded in browsers supporting HSTS preload
 
+# Secure Proxy SSL Header
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # ==============================================
 #               ROOT URL
@@ -141,6 +143,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
 
 # ==============================================
 #               STATIC FILES
