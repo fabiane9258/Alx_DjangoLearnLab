@@ -1,0 +1,20 @@
+<!-- library_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ object.name }} - Library Details</title>
+</head>
+<body>
+    <h1>{{ object.name }}</h1>
+    <p><strong>Location:</strong> {{ object.location }}</p>
+
+    <h2>Books in this Library:</h2>
+    <ul>
+        {% for book in object.books.all %}
+            <li>{{ book.title }} by {{ book.author.name }}</li>
+        {% empty %}
+            <li>No books available in this library.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
