@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
-{% block title %}Profile{% endblock %}
+
+{% block title %}My Profile{% endblock %}
+
 {% block content %}
-<h2>Profile</h2>
-<p>Username: {{ user.username }}</p>
-<p>Email: {{ user.email }}</p>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Update</button>
-</form>
+<div class="profile-container">
+    <h2>My Profile</h2>
+
+    <!-- Display current profile info -->
+    <div class="profile-info">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+
+    <hr>
+
+    <!-- Profile update form -->
+    <h3>Update Profile</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        {% if form.errors %}
+            <div class="errorlist">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit">Update</button>
+    </form>
+</div>
 {% endblock %}

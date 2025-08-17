@@ -5,6 +5,22 @@ from django.urls import reverse_lazy
 from .models import Post
 from .forms import PostForm
 from taggit.models import Tag
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import ProfileForm
+
+@login_required
+def profile_view(request):
+    if request.method == "POST":  #handles POST
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()  # save()
+            return redirect('profile')  # reload profile after save
+    else:
+        form = ProfileForm(instance=request.user)
+
+    return render(request, "blog/profile.html", {"form": form})
+
 
 class PostListView(ListView):
     model = Post
