@@ -20,6 +20,8 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/edit/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    path('post/<int:pk>/update/', views.post_update, name='post_update'),
+
 
     # Extra features
     path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'),  # ✅ Tag filter
@@ -31,4 +33,5 @@ urlpatterns = [
     path('profile/', profile_view, name='profile'),
 
      path("profile/", profile_view, name="profile"),
+
 ]
