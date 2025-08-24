@@ -1,8 +1,12 @@
-# posts/urls.py
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import PostViewSet, CommentViewSet, FeedView
+
+router = DefaultRouter()
+router.register(r'posts', PostViewSet)
+router.register(r'comments', CommentViewSet)
 
 urlpatterns = [
-    # Example placeholder — you can replace with real views later
-    path('', views.index, name='posts-index'),
+    path('', include(router.urls)),
+    path('feed/', FeedView.as_view(), name='feed'),
 ]
